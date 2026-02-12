@@ -1,23 +1,49 @@
-﻿@model IEnumerable<EmployeeMiniApp.Models.Employee>
+﻿@model List<EmployeeMiniApp.Models.Employee>
 
-<h2>Employee List</h2>
+@{
+    ViewData["Title"] = "Index";
+}
 
-<a asp-action="Create">Add New Employee</a>
+<h1>Index</h1>
 
-<table border="1" cellpadding="5" cellspacing="0">
-    <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Department</th>
-        <th>Salary</th>
-    </tr>
-    @foreach (var emp in Model)
-    {
+<p>
+    <a asp-action="Create" asp-controller="Employee">Create New</a>
+</p>
+<table class="table">
+    <thead>
         <tr>
-            <td>@emp.Name</td>
-            <td>@emp.Email</td>
-            <td>@emp.Department</td>
-            <td>@emp.Salary</td>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Department</th>
+            <th>Salary</th>
+            <th>CreatedAt</th>
+            <th>Action</th>
         </tr>
-    }
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Salary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                <a asp-controller="Employee" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
 </table>

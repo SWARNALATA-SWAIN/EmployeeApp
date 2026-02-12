@@ -1,21 +1,25 @@
-using System.Diagnostics;
 using EmployeeApp.Models;
+using EmployeeMiniApp.Data;
+using EmployeeMiniApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace EmployeeApp.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly AppDbContext _context;
+        public HomeController(ILogger<HomeController> logger, AppDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
-            return View();
+            List<Employee> employees = _context.Employees.OrderByDescending(p => p.Id).ToList();
+            return View(employees);
         }
 
         public IActionResult Privacy()
